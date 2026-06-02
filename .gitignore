@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Data & model artifacts (don't commit — use a small sample or a Release)
+data/
+checkpoints/
+*.pt
+*.pth
+runs/
+wandb/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
