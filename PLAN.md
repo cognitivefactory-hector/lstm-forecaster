@@ -20,10 +20,10 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 ## Milestones
 
 ### M0 — Repo scaffold *(½ day)*
-- [ ] Folder + `SPEC.md` + `PLAN.md`; `README.md` (stub + disclaimer), `DECISIONS.md` (paste template from `SPEC.md` §10), `.gitignore` (Python + `data/` + `checkpoints/` + `*.pt`), `LICENSE` (MIT).
-- [ ] `pyproject.toml` (deps + ruff + pytest config, single source of truth); pin `torch`, `statsmodels`, `pandas`, `scikit-learn`, `gradio`, `yfinance`.
-- [ ] GitHub Actions: ruff + pytest.
-- [ ] `gh repo create … --public --push`.
+- [x] Folder + `SPEC.md` + `PLAN.md`; `README.md` (stub + disclaimer), `DECISIONS.md` (paste template from `SPEC.md` §10), `.gitignore` (Python + `data/` + `checkpoints/` + `*.pt`), `LICENSE` (MIT).
+- [x] `pyproject.toml` (deps + ruff + pytest config, single source of truth); pin `torch`, `statsmodels`, `pandas`, `scikit-learn`, `gradio`, `yfinance`.
+- [x] GitHub Actions: ruff + pytest.
+- [x] `gh repo create … --public --push`.
 - **Acceptance:** `pytest` runs (even if empty); CI green; repo on GitHub.
 
 ### M1 — Data + windowing + the no-leakage harness (TDD) *(1–2 days)* — **safety core**
