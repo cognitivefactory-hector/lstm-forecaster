@@ -33,10 +33,10 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** `pytest` green; the leakage test fails loudly if you "accidentally" scale on the full series.
 
 ### M2 — Baselines + metrics (TDD) *(1 day)* — **the bar**
-- [ ] `src/models/baselines.py`: naive + seasonal-naive. `src/models/arima.py`: ARIMA (order via AIC / small grid).
-- [ ] `src/eval/metrics.py`: MASE (vs. naive), RMSE, MAE; per-horizon aggregation.
-- [ ] Tests: MASE of the naive model ≈ 1.0; metrics match hand-computed values on a fixture.
-- **Acceptance:** `pytest` green; baseline scoreboard prints per horizon.
+- [x] `src/models/baselines.py`: naive + seasonal-naive. `src/models/arima.py`: ARIMA (order via AIC / small grid).
+- [x] `src/eval/metrics.py`: MASE (vs. naive), RMSE, MAE; per-horizon aggregation.
+- [x] Tests: MASE of the naive model ≈ 1.0; metrics match hand-computed values on a fixture.
+- **Acceptance:** `pytest` green; baseline scoreboard prints per horizon. (`src/eval/scoreboard.py`)
 
 ### M3 — Walk-forward backtest engine (TDD) *(1 day)*
 - [ ] `src/eval/walk_forward.py`: rolling origin; refit per fold; aggregate metrics across folds; prediction intervals.
