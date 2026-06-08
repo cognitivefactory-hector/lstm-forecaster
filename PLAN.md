@@ -55,8 +55,8 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** a results table + verdict exist; at least one honest "baseline wins / ties" is reported if true. (LSTM loses to seasonal-naive on the synthetic series — reported plainly.)
 
 ### M6 — Gradio app *(1 day)*
-- [ ] `app/app.py`: dataset selector → run → forecast plot + scoreboard + verdict; footer disclaimer.
-- **Acceptance:** app runs locally; demo viewer can drive it.
+- [x] `app/app.py`: dataset selector → run → forecast plot + scoreboard + verdict; footer disclaimer. (`app/datasets.py`, `app/pipeline.py`, `app/app.py`; real series = AAPL realized volatility, sample committed.)
+- **Acceptance:** app runs locally; demo viewer can drive it. (Launched + served locally; both datasets drive the full pipeline.)
 
 ### M7 — Deploy to Hugging Face Spaces + README *(½–1 day)*
 - [ ] Push to a Gradio **HF Space** (commit a small checkpoint or pull from a Release).
