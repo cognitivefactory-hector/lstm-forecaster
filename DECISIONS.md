@@ -24,7 +24,9 @@ Forecasts I can trust because the evaluation can't see the future; a clear state
 ---
 
 ## Engineering decisions (recorded as built)
-- **Modeling:** PyTorch stacked LSTM; statsmodels ARIMA; seasonal-naive baseline as the bar. Direct multi-horizon output (or recursive — record the choice).
+- **Modeling:** PyTorch stacked LSTM; statsmodels ARIMA; seasonal-naive baseline as the bar.
+- **Multistep output: DIRECT, not recursive (locked in M4).** The LSTM emits all `horizon` steps at once from the input window. _Why:_ recursive forecasting feeds its own predictions back and compounds error across the horizon; direct trades that for more output parameters and matches the direct-target windowing already in `src/data/windowing.py`. This is the answer to whiteboard Q5.
+- **Honest finding (M4): on the seeded synthetic period-7 series, the LSTM does *not* beat seasonal-naive** (mean MASE ≈ 1.25 vs ≈ 1.06 through the walk-forward harness), though it edges ahead at one horizon. A pure-seasonal series is exactly where a one-line seasonal baseline is hard to beat; reporting this rather than tuning until the deep model "wins" is the point (SPEC §0, whiteboard Q6). Re-evaluate on the real public series before any final verdict.
 - **Evaluation = the safety core, built first:** time-ordered walk-forward, **train-only scaling**, fixed origin; an explicit no-leakage test runs in CI.
 - **Stack deviation (on purpose):** PyTorch + **Gradio + Hugging Face Spaces** instead of the portfolio's Django/Render — ML demos belong on HF Spaces and it signals ecosystem fluency. _Why recorded:_ consistency matters for web apps; the right *tool* matters for ML.
 - **Artifacts:** don't commit datasets/large checkpoints — small sample in-repo or a Release.
