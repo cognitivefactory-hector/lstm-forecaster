@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Milestones **M0 (scaffold)** and **M1 (data + windowing + no-leakage harness)** are complete. `src/data/` holds the leak-free harness (`synthetic`, `windowing`, `splits`, `scaling`, `harness`, `loaders`); `tests/` holds the crown-jewel suite. The models (`src/models/`), eval engine (`src/eval/`), `src/train.py`, and `app/` are **not built yet** — they arrive in M2 → M8. Follow the layout and build order below rather than inventing your own.
+Milestones **M0–M2** are complete:
+- **M1** — `src/data/` leak-free harness (`synthetic`, `windowing`, `splits`, `scaling`, `harness`, `loaders`).
+- **M2** — `src/models/baselines.py` (naive + seasonal-naive), `src/models/arima.py` (AIC-grid order selection), `src/eval/metrics.py` (MASE/RMSE/MAE + `per_horizon`), `src/eval/scoreboard.py` (per-horizon comparison table).
+
+Still to come (M3 → M8): the walk-forward backtest engine (`src/eval/walk_forward.py`), the LSTM (`src/models/lstm.py`), `src/train.py`, and `app/`. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
