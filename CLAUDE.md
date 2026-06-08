@@ -10,10 +10,11 @@ Milestones **M0–M4** are complete:
 - **M3** — `src/eval/walk_forward.py` (model-agnostic rolling-origin backtest; refit per fold) and `src/eval/intervals.py` (residual-based prediction intervals).
 - **M4** — `src/models/lstm.py` (`StackedLSTM`, **direct** multi-horizon output) and `src/train.py` (seeded `train_lstm` with early stopping, checkpoint/metrics I/O, `make_lstm_forecaster` adapter, and `run_training` / `python -m src.train`).
 - **M5** — `src/eval/verdict.py` (`build_verdict` → plain-language per-horizon wins/ties/losses) and `src/eval/plots.py` (`plot_forecast_vs_actual` with baseline overlay, `plot_error_by_horizon`; Figures built without pyplot, Gradio-ready).
+- **M6** — `app/`: `datasets.py` (registry — seeded synthetic + AAPL realized volatility from the committed `app/samples/aapl_close.csv`), `pipeline.py` (`run_evaluation` — the tested end-to-end demo engine), `app.py` (thin Gradio UI: `build_demo`/`run_demo`/`main`). Run with `python -m app.app`.
 
 The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** (mean MASE 1.25 vs 1.06) — `build_verdict` states this plainly, including the one horizon it wins. Reported, not tuned away (see `DECISIONS.md`).
 
-Still to come (M6 → M8): the Gradio app (`app/`, M6), HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). Follow the layout and build order below rather than inventing your own.
+Still to come (M7 → M8): HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). **M6 demo result (the headline story): the LSTM WINS on the enriched synthetic demand series (mean MASE ≈ 0.68 vs seasonal-naive ≈ 1.10) and LOSES on AAPL volatility (≈ 2.7 vs 1.5) — both reported.** The synthetic generator gained optional multi-seasonality / AR / shock args (default off, so M1 behavior is unchanged) to give the deep model a series with structure a single-lag baseline can't capture. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
@@ -73,7 +74,7 @@ pytest tests/test_no_leakage.py # run the crown-jewel leakage tests alone
 pytest -k windowing             # run a single test file/function by name pattern
 ruff check .                    # lint
 python -m src.train             # (M4) reproducible seeded training; writes checkpoint + metrics JSON
-python app/app.py               # (M6) run the Gradio demo locally
+python -m app.app               # (M6) run the Gradio demo locally
 ```
 
 CI runs ruff + pytest; the no-leakage tests must pass in CI.
@@ -83,7 +84,7 @@ CI runs ruff + pytest; the no-leakage tests must pass in CI.
 These are open in the spec and must be chosen *and defended* in `DECISIONS.md` when implemented:
 
 - ~~**Direct vs. recursive multistep**~~ — **decided (M4): direct** multi-horizon output. See `DECISIONS.md`.
-- **Which real public series** is the demo primary (a public demand/retail dataset vs. a financial series via `yfinance`).
+- ~~**Which real public series**~~ — **decided (M6): AAPL realized volatility** (yfinance; forecast volatility, not price). See `DECISIONS.md`.
 - **MASE** is the headline metric (scale-free, baseline-relative: < 1 means it beat naive); RMSE/MAE secondary; **always report per horizon**, never a single aggregate.
 
 ## Data & artifact rules
