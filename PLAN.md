@@ -27,9 +27,9 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** `pytest` runs (even if empty); CI green; repo on GitHub.
 
 ### M1 — Data + windowing + the no-leakage harness (TDD) *(1–2 days)* — **safety core**
-- [ ] `src/data/`: seeded synthetic seasonal-demand generator; a public loader (demand dataset or `yfinance`); a sliding-window builder producing multistep targets.
-- [ ] **Split by time before scaling; fit scaler on train only.**
-- [ ] **Tests first (crown jewels):** `test_no_leakage.py` — scaler params depend only on train; no window crosses the forecast origin; no row shuffling. `test_windowing.py` — shapes/targets correct.
+- [x] `src/data/`: seeded synthetic seasonal-demand generator; a public loader (demand dataset or `yfinance`); a sliding-window builder producing multistep targets.
+- [x] **Split by time before scaling; fit scaler on train only.**
+- [x] **Tests first (crown jewels):** `test_no_leakage.py` — scaler params depend only on train; no window crosses the forecast origin; no row shuffling. `test_windowing.py` — shapes/targets correct.
 - **Acceptance:** `pytest` green; the leakage test fails loudly if you "accidentally" scale on the full series.
 
 ### M2 — Baselines + metrics (TDD) *(1 day)* — **the bar**

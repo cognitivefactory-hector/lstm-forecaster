@@ -14,12 +14,13 @@ venv/
 !.env.example
 
 # Data & model artifacts (don't commit — use a small sample or a Release)
-data/
-checkpoints/
+# Anchored to repo root so the source package src/data/ stays tracked.
+/data/
+/checkpoints/
 *.pt
 *.pth
-runs/
-wandb/
+/runs/
+/wandb/
 
 # OS / editor
 .DS_Store
