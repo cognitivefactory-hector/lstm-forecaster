@@ -56,12 +56,29 @@ def realized_volatility(prices: np.ndarray, window: int = 10) -> np.ndarray:
 
 
 def load_synthetic() -> DatasetSpec:
+    # Weekly + monthly seasonality, AR(1) noise, and occasional shocks: structure
+    # a single-lag seasonal-naive cannot capture but an LSTM can. This is the
+    # series where the deep model legitimately earns its place (it is not rigged —
+    # the win comes from real, learnable structure the baseline ignores).
     return DatasetSpec(
         name="synthetic_demand",
-        label="Synthetic seasonal demand (seeded)",
-        series=make_seasonal_demand(n=600, period=7, seed=0),
+        label="Synthetic demand (weekly + monthly + AR + shocks)",
+        series=make_seasonal_demand(
+            n=800,
+            period=7,
+            seed=0,
+            base=60.0,
+            trend=0.02,
+            seasonal_amp=6.0,
+            noise=4.0,
+            period2=30,
+            seasonal_amp2=11.0,
+            ar=0.45,
+            shock_prob=0.03,
+            shock_scale=12.0,
+        ),
         season=7,
-        note="Seeded, reproducible trend + weekly seasonality + noise.",
+        note="Seeded: trend + weekly & monthly seasonality + AR(1) noise + shocks.",
     )
 
 

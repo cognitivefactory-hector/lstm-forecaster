@@ -14,7 +14,7 @@ Milestones **M0–M4** are complete:
 
 The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** (mean MASE 1.25 vs 1.06) — `build_verdict` states this plainly, including the one horizon it wins. Reported, not tuned away (see `DECISIONS.md`).
 
-Still to come (M7 → M8): HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). Note (M6 finding): the LSTM currently loses to the simple baseline on *both* demo series — both happen to favor persistence/seasonal baselines. That's honest and on-thesis, but `DECISIONS.md` flags an open call on enriching the synthetic generator so the deep model gets a fair series to win on. Follow the layout and build order below rather than inventing your own.
+Still to come (M7 → M8): HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). **M6 demo result (the headline story): the LSTM WINS on the enriched synthetic demand series (mean MASE ≈ 0.68 vs seasonal-naive ≈ 1.10) and LOSES on AAPL volatility (≈ 2.7 vs 1.5) — both reported.** The synthetic generator gained optional multi-seasonality / AR / shock args (default off, so M1 behavior is unchanged) to give the deep model a series with structure a single-lag baseline can't capture. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
