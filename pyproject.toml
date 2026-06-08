@@ -15,6 +15,7 @@ dependencies = [
     "scikit-learn>=1.5",
     "statsmodels>=0.14",
     "torch>=2.2",
+    "matplotlib>=3.8",
     "gradio>=4.0",
     "yfinance>=0.2.40",
 ]

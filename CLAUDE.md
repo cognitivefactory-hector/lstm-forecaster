@@ -9,10 +9,11 @@ Milestones **M0–M4** are complete:
 - **M2** — `src/models/baselines.py` (naive + seasonal-naive), `src/models/arima.py` (AIC-grid order selection), `src/eval/metrics.py` (MASE/RMSE/MAE + `per_horizon`), `src/eval/scoreboard.py` (per-horizon comparison table).
 - **M3** — `src/eval/walk_forward.py` (model-agnostic rolling-origin backtest; refit per fold) and `src/eval/intervals.py` (residual-based prediction intervals).
 - **M4** — `src/models/lstm.py` (`StackedLSTM`, **direct** multi-horizon output) and `src/train.py` (seeded `train_lstm` with early stopping, checkpoint/metrics I/O, `make_lstm_forecaster` adapter, and `run_training` / `python -m src.train`).
+- **M5** — `src/eval/verdict.py` (`build_verdict` → plain-language per-horizon wins/ties/losses) and `src/eval/plots.py` (`plot_forecast_vs_actual` with baseline overlay, `plot_error_by_horizon`; Figures built without pyplot, Gradio-ready).
 
-The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest M4 result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** — that's reported, not tuned away (see `DECISIONS.md`).
+The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** (mean MASE 1.25 vs 1.06) — `build_verdict` states this plainly, including the one horizon it wins. Reported, not tuned away (see `DECISIONS.md`).
 
-Still to come (M5 → M8): the verdict/plots layer (M5), the Gradio app (`app/`, M6), HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). Follow the layout and build order below rather than inventing your own.
+Still to come (M6 → M8): the Gradio app (`app/`, M6), HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
