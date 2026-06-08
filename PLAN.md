@@ -44,9 +44,9 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** `pytest` green; baselines evaluated via walk-forward.
 
 ### M4 — Stacked LSTM (PyTorch) *(2 days)*
-- [ ] `src/models/lstm.py`: stacked LSTM, hidden-state sizing, inter-layer dropout, **direct multi-horizon** output (or recursive — record the choice).
-- [ ] `src/train.py`: reproducible (seeded) training; early stopping on a time-ordered val fold; save checkpoint + metrics JSON.
-- [ ] Tests: deterministic forward pass under a seed; output shape = horizon; overfits a tiny synthetic set (sanity).
+- [x] `src/models/lstm.py`: stacked LSTM, hidden-state sizing, inter-layer dropout, **direct multi-horizon** output (direct chosen — see `DECISIONS.md`).
+- [x] `src/train.py`: reproducible (seeded) training; early stopping on a time-ordered val fold; save checkpoint + metrics JSON (`run_training` / `python -m src.train`).
+- [x] Tests: deterministic forward pass under a seed; output shape = horizon; overfits a tiny synthetic set (sanity).
 - **Acceptance:** LSTM trains, evaluated through the *same* walk-forward harness as the baselines.
 
 ### M5 — Honest scoreboard + verdict *(½ day)*

@@ -4,14 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Milestones **M0–M3** are complete:
+Milestones **M0–M4** are complete:
 - **M1** — `src/data/` leak-free harness (`synthetic`, `windowing`, `splits`, `scaling`, `harness`, `loaders`).
 - **M2** — `src/models/baselines.py` (naive + seasonal-naive), `src/models/arima.py` (AIC-grid order selection), `src/eval/metrics.py` (MASE/RMSE/MAE + `per_horizon`), `src/eval/scoreboard.py` (per-horizon comparison table).
 - **M3** — `src/eval/walk_forward.py` (model-agnostic rolling-origin backtest; refit per fold) and `src/eval/intervals.py` (residual-based prediction intervals).
+- **M4** — `src/models/lstm.py` (`StackedLSTM`, **direct** multi-horizon output) and `src/train.py` (seeded `train_lstm` with early stopping, checkpoint/metrics I/O, `make_lstm_forecaster` adapter, and `run_training` / `python -m src.train`).
 
-The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model (baselines now, the LSTM in M4) is evaluated through the *same* leak-free harness. A model's own scaling is its concern; it fits on the past-only train slice it receives.
+The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest M4 result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** — that's reported, not tuned away (see `DECISIONS.md`).
 
-Still to come (M4 → M8): the LSTM (`src/models/lstm.py`), `src/train.py`, and `app/`. Follow the layout and build order below rather than inventing your own.
+Still to come (M5 → M8): the verdict/plots layer (M5), the Gradio app (`app/`, M6), HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
@@ -80,7 +81,7 @@ CI runs ruff + pytest; the no-leakage tests must pass in CI.
 
 These are open in the spec and must be chosen *and defended* in `DECISIONS.md` when implemented:
 
-- **Direct vs. recursive multistep** output (recursive compounds its own error; direct trades that for more params). Pick one, record why.
+- ~~**Direct vs. recursive multistep**~~ — **decided (M4): direct** multi-horizon output. See `DECISIONS.md`.
 - **Which real public series** is the demo primary (a public demand/retail dataset vs. a financial series via `yfinance`).
 - **MASE** is the headline metric (scale-free, baseline-relative: < 1 means it beat naive); RMSE/MAE secondary; **always report per horizon**, never a single aggregate.
 
