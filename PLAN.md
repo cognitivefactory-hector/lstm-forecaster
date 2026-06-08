@@ -39,8 +39,8 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** `pytest` green; baseline scoreboard prints per horizon. (`src/eval/scoreboard.py`)
 
 ### M3 — Walk-forward backtest engine (TDD) *(1 day)*
-- [ ] `src/eval/walk_forward.py`: rolling origin; refit per fold; aggregate metrics across folds; prediction intervals.
-- [ ] Tests: folds never use future data; horizon-error increases monotonically on a constructed ramp.
+- [x] `src/eval/walk_forward.py`: rolling origin; refit per fold; aggregate metrics across folds; prediction intervals (`src/eval/intervals.py`).
+- [x] Tests: folds never use future data; horizon-error increases monotonically on a constructed ramp.
 - **Acceptance:** `pytest` green; baselines evaluated via walk-forward.
 
 ### M4 — Stacked LSTM (PyTorch) *(2 days)*

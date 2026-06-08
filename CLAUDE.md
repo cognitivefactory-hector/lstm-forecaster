@@ -4,11 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Milestones **M0–M2** are complete:
+Milestones **M0–M3** are complete:
 - **M1** — `src/data/` leak-free harness (`synthetic`, `windowing`, `splits`, `scaling`, `harness`, `loaders`).
 - **M2** — `src/models/baselines.py` (naive + seasonal-naive), `src/models/arima.py` (AIC-grid order selection), `src/eval/metrics.py` (MASE/RMSE/MAE + `per_horizon`), `src/eval/scoreboard.py` (per-horizon comparison table).
+- **M3** — `src/eval/walk_forward.py` (model-agnostic rolling-origin backtest; refit per fold) and `src/eval/intervals.py` (residual-based prediction intervals).
 
-Still to come (M3 → M8): the walk-forward backtest engine (`src/eval/walk_forward.py`), the LSTM (`src/models/lstm.py`), `src/train.py`, and `app/`. Follow the layout and build order below rather than inventing your own.
+The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model (baselines now, the LSTM in M4) is evaluated through the *same* leak-free harness. A model's own scaling is its concern; it fits on the past-only train slice it receives.
+
+Still to come (M4 → M8): the LSTM (`src/models/lstm.py`), `src/train.py`, and `app/`. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
