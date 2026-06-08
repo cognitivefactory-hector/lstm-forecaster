@@ -50,9 +50,9 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** LSTM trains, evaluated through the *same* walk-forward harness as the baselines.
 
 ### M5 — Honest scoreboard + verdict *(½ day)*
-- [ ] Compare LSTM vs. baselines per series, per horizon; write the plain verdict (incl. any losses).
-- [ ] Plots: forecast vs. actual w/ baseline overlay; error-by-horizon.
-- **Acceptance:** a results table + verdict exist; at least one honest "baseline wins / ties" is reported if true.
+- [x] Compare LSTM vs. baselines per series, per horizon; write the plain verdict (incl. any losses). (`src/eval/verdict.py`)
+- [x] Plots: forecast vs. actual w/ baseline overlay; error-by-horizon. (`src/eval/plots.py`)
+- **Acceptance:** a results table + verdict exist; at least one honest "baseline wins / ties" is reported if true. (LSTM loses to seasonal-naive on the synthetic series — reported plainly.)
 
 ### M6 — Gradio app *(1 day)*
 - [ ] `app/app.py`: dataset selector → run → forecast plot + scoreboard + verdict; footer disclaimer.
