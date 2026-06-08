@@ -59,9 +59,10 @@ Keep `DECISIONS.md` open: **Situation · Decision** (incl. rejected leaky shortc
 - **Acceptance:** app runs locally; demo viewer can drive it. (Launched + served locally; both datasets drive the full pipeline.)
 
 ### M7 — Deploy to Hugging Face Spaces + README *(½–1 day)*
-- [ ] Push to a Gradio **HF Space** (commit a small checkpoint or pull from a Release).
-- [ ] `README.md`: what/why, one-command run, data provenance + limits, links to Space + `DECISIONS.md` + whiteboard.
-- **Acceptance:** public Space URL works; the GIF in the README matches reality.
+- [x] **Space-ready:** root `space_app.py` entrypoint, `requirements.txt` (CPU torch, minimal), HF front-matter in `README.md`. App trains on-the-fly (no committed checkpoint needed).
+- [x] `README.md`: what/why, one-command run, data provenance + limits, real result visuals (`assets/`), deploy steps, links to `DECISIONS.md` + whiteboard.
+- [ ] **Push to the HF Space** — needs Hector's HF auth (`git push space main`); deploy steps in README. Then fill in the live Space URL.
+- **Acceptance:** public Space URL works (pending the push above); README result plots are generated from the real pipeline and match reality.
 
 ### M8 — Decision Record + Whiteboard session *(½ day)* — **the differentiator, don't skip**
 - [ ] Complete `DECISIONS.md`; record the 5–8 min session using `SPEC.md` §3.1 — center #1 (prove no leakage) and #6 (where it loses).

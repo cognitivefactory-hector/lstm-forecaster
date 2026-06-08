@@ -1,0 +1,10 @@
+# Hugging Face Spaces runtime deps (the demo's actual import graph only).
+# gradio is provided by the Space itself via `sdk_version` in README.md
+# front-matter, so it is intentionally not listed here.
+# CPU torch wheels keep the free CPU Space build lean and fast.
+# The full dev/runtime dependency set is in pyproject.toml.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+numpy>=1.26
+pandas>=2.2
+matplotlib>=3.8

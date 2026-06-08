@@ -14,7 +14,9 @@ Milestones **M0–M4** are complete:
 
 The walk-forward engine takes a `forecaster(train, horizon) -> forecast` callable and hands it only past data — that's how every model is evaluated through the *same* leak-free harness. The LSTM plugs in via `make_lstm_forecaster`, which scales with the (train-only) training scaler and feeds only the last `input_len` points. **Honest result: the LSTM does not beat seasonal-naive on the pure-seasonal synthetic series** (mean MASE 1.25 vs 1.06) — `build_verdict` states this plainly, including the one horizon it wins. Reported, not tuned away (see `DECISIONS.md`).
 
-Still to come (M7 → M8): HF Spaces deploy + README (M7), and the recorded whiteboard/Decision Record (M8). **M6 demo result (the headline story): the LSTM WINS on the enriched synthetic demand series (mean MASE ≈ 0.68 vs seasonal-naive ≈ 1.10) and LOSES on AAPL volatility (≈ 2.7 vs 1.5) — both reported.** The synthetic generator gained optional multi-seasonality / AR / shock args (default off, so M1 behavior is unchanged) to give the deep model a series with structure a single-lag baseline can't capture. Follow the layout and build order below rather than inventing your own.
+**M7** is prepared: root `space_app.py` (HF entrypoint), `requirements.txt` (CPU torch, minimal — gradio comes from the Space `sdk_version`), HF front-matter + a full results-driven `README.md` with real plots under `assets/`. The actual `git push space main` to Hugging Face needs Hector's HF auth (steps in the README); the live Space URL gets filled in after.
+
+Still to come (M8): the recorded whiteboard session + finalized Decision Record. **M6 demo result (the headline story): the LSTM WINS on the enriched synthetic demand series (mean MASE ≈ 0.68 vs seasonal-naive ≈ 1.10) and LOSES on AAPL volatility (≈ 2.7 vs 1.5) — both reported.** The synthetic generator gained optional multi-seasonality / AR / shock args (default off, so M1 behavior is unchanged) to give the deep model a series with structure a single-lag baseline can't capture. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
