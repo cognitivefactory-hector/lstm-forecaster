@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-This repo is currently a **documentation-only scaffold** (milestone M0). The only files present are planning/design docs — there is no `src/`, no `pyproject.toml`, no tests yet. Implementation follows `PLAN.md` milestones M0 → M8. When you add code, follow the layout and build order below rather than inventing your own.
+Milestones **M0 (scaffold)** and **M1 (data + windowing + no-leakage harness)** are complete. `src/data/` holds the leak-free harness (`synthetic`, `windowing`, `splits`, `scaling`, `harness`, `loaders`); `tests/` holds the crown-jewel suite. The models (`src/models/`), eval engine (`src/eval/`), `src/train.py`, and `app/` are **not built yet** — they arrive in M2 → M8. Follow the layout and build order below rather than inventing your own.
 
 ## What this project really is (read before building)
 
@@ -57,18 +57,17 @@ tests/     test_no_leakage.py, test_windowing.py, test_metrics.py
 
 ## Commands
 
-There is no `pyproject.toml` yet (M0). Once it exists, the intended workflow is:
-
 ```bash
-pytest                          # run the test suite (no-leakage / windowing / metrics first)
-pytest tests/test_no_leakage.py # run the crown-jewel leakage test alone
-pytest -k metrics               # run a single test by name pattern
+pip install -e ".[dev]"         # one-time: install runtime + dev deps (CPU torch on CI)
+pytest                          # run the full test suite
+pytest tests/test_no_leakage.py # run the crown-jewel leakage tests alone
+pytest -k windowing             # run a single test file/function by name pattern
 ruff check .                    # lint
-python -m src.train             # reproducible (seeded) training; writes checkpoint + metrics JSON
-python app/app.py               # run the Gradio demo locally
+python -m src.train             # (M4) reproducible seeded training; writes checkpoint + metrics JSON
+python app/app.py               # (M6) run the Gradio demo locally
 ```
 
-CI runs ruff + pytest; the no-leakage test must pass in CI.
+CI runs ruff + pytest; the no-leakage tests must pass in CI.
 
 ## Modeling decisions to make and record
 
